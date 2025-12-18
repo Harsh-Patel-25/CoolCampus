@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="Logocc.png" type="image/png" />
+  <title>Leave History</title>
+  <style>
+    :root {
+      --bg: #35213F;
+      --card-bg: #574A75;
+      --accent: #e74c3c;
+      --highlight: #b8f3ff;
+      --text: #ffffff;
+    }
+
+    .light-mode {
+      --bg: #f4f4f4;
+      --card-bg: #ffffff;
+      --accent: #374785;
+      --highlight: #333;
+      --text: #000000;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 20px;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .history-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: #fff;
+      background: var(--accent);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      background: #c0392b;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 2px solid var(--highlight);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .theme-toggle img {
+      width: 30px;
+      height: 30px;
+    }
+
+    .tooltip {
+      position: absolute;
+      right: 60px;
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s ease;
+      border: 1px solid var(--highlight);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .theme-toggle:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body>
+  <h1>Leave History</h1>
+  <div class="history-container">
+    <div id="historyContent">Loading...</div>
+    <a href="NOC.html">← Back</a>
+  </div>
+
+  <!-- Theme Toggle Button -->
+  <div class="theme-toggle" onclick="toggleTheme()">
+    <div class="tooltip" id="themeTooltip">Switch to light mode</div>
+    <img id="themeIcon" src="sunny_979585.png" alt="theme icon" />
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const roll = params.get("roll");
+    const leaveNOCData = JSON.parse(localStorage.getItem("leaveNOC")) || {};
+    const data = leaveNOCData[roll];
+    const container = document.getElementById("historyContent");
+
+    if (data && data.leaveHistory && data.leaveHistory.length > 0) {
+      let html = "<ul>";
+      data.leaveHistory.forEach((entry, index) => {
+        html += `<li>${index + 1}. ${entry.from} to ${entry.to}</li>`;
+      });
+      html += "</ul>";
+      container.innerHTML = html;
+    } else {
+      container.innerHTML = "<p>No leave history found.</p>";
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const icon = document.getElementById("themeIcon");
+      const tooltip = document.getElementById("themeTooltip");
+
+      body.classList.toggle("light-mode");
+
+      if (body.classList.contains("light-mode")) {
+        icon.src = "half-moon_547433.png";
+        tooltip.textContent = "Switch to dark mode";
+      } else {
+        icon.src = "sunny_979585.png";
+        tooltip.textContent = "Switch to light mode";
+      }
+    }
+  </script>
+</body>
+</html>

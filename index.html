@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - TheCoolCampus</title>
+    <link rel="icon" href="Logocc.png" type="image/png" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
+    <style>
+      :root {
+        --bg: #36213e;
+        --card-bg: #554971;
+        --input-bg: #63768d;
+        --accent: #8ac6d0;
+        --highlight: #b8f3ff;
+        --text: #ffffff;
+      }
+
+      .light-mode {
+        --bg: #f4f4f4;
+        --card-bg: #ffffff;
+        --input-bg: #dbe5ec;
+        --accent: #374785;
+        --highlight: #333;
+        --text: #000;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Outfit", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        transition: background 0.4s ease;
+        position: relative;
+      }
+
+      .login-container {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .login-card {
+        background: var(--card-bg);
+        border: 2px solid var(--highlight);
+        border-radius: 16px;
+        padding: 30px 25px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        color: var(--text);
+        text-align: center;
+      }
+
+      .login-card h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: var(--highlight);
+      }
+
+      .login-card p {
+        margin-bottom: 25px;
+        font-size: 0.95rem;
+        color: #ddd;
+      }
+
+      .input-group {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-group i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--highlight);
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 12px 12px 12px 38px;
+        border: none;
+        border-radius: 10px;
+        background: var(--input-bg);
+        color: var(--text);
+        font-size: 1rem;
+        outline: none;
+      }
+
+      .input-group input:focus {
+        border: 2px solid var(--highlight);
+        background: #7e91a8;
+      }
+
+      .input-group input::placeholder {
+        color: #ffffff;
+        opacity: 0.7;
+      }
+
+      .toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: var(--highlight);
+        user-select: none;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        background: var(--accent);
+        color: var(--bg);
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background: var(--highlight);
+      }
+
+      .signup {
+        margin-top: 15px;
+        font-size: 0.9rem;
+        color: #ccc;
+      }
+
+      .signup a {
+        color: var(--highlight);
+        text-decoration: underline;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--card-bg);
+        border: 2px solid var(--highlight);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+      }
+
+      .theme-toggle img {
+        width: 30px;
+        height: 30px;
+      }
+
+      .tooltip {
+        position: absolute;
+        right: 60px;
+        background: var(--card-bg);
+        color: var(--text);
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s ease;
+        border: 1px solid var(--highlight);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .theme-toggle:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .brand-header {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        align-items: center;
+        z-index: 100;
+      }
+
+      .brand-header img {
+        height: 40px;
+        margin-right: 10px;
+      }
+
+      .brand-header span {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--highlight);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="brand-header">
+      <img src="Logocc.png" alt="Cool Campus Logo" />
+      <span>TheCoolCampus</span>
+    </div>
+
+    <div class="login-container">
+      <form class="login-card" onsubmit="return validateLogin()">
+        <h2>Welcome Chief ✨</h2>
+        <p>Login to vibe with us</p>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="email" placeholder="Email" required />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="password" placeholder="Password" required />
+          <span class="toggle" onclick="togglePassword()"><i class="fas fa-eye"></i></span>
+        </div>
+        <button type="submit">Login 💫</button>
+        <p class="signup">Don't have an account? <a href="#">Sign up</a></p>
+      </form>
+    </div>
+
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <div class="tooltip" id="themeTooltip">Switch to light mode</div>
+      <img id="themeIcon" src="sunny_979585.png" alt="theme icon" />
+    </div>
+
+    <script>
+      function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        const toggleIcon = document.querySelector(".toggle i");
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleIcon.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+          passwordInput.type = "password";
+          toggleIcon.classList.replace("fa-eye-slash", "fa-eye");
+        }
+      }
+
+      function validateLogin() {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!email || !password) {
+          alert("Please fill in all fields 😅");
+          return false;
+        }
+
+        if (password !== "HRS@25") {
+          alert("Wrong password! 🚫");
+          return false;
+        }
+
+        window.location.href = "Dashboard.html";
+        return false;
+      }
+
+      function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById("themeIcon");
+        const tooltip = document.getElementById("themeTooltip");
+
+        body.classList.toggle("light-mode");
+
+        if (body.classList.contains("light-mode")) {
+          icon.src = "half-moon_547433.png";
+          tooltip.textContent = "Switch to dark mode";
+        } else {
+          icon.src = "sunny_979585.png";
+          tooltip.textContent = "Switch to light mode";
+        }
+      }
+    </script>
+  </body>
+</html>

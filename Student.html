@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="Logocc.png" type="image/png" />
+    <title>Student Details</title>
+    <style>
+      /* Existing Student Details styles */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Outfit", sans-serif;
+        background-color: #35213f;
+        color: #fff;
+        transition: background-color 0.4s ease, color 0.4s ease;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 2rem;
+        color: #ffffff;
+        letter-spacing: 1px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #574a75;
+        border-radius: 16px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .top-bar button {
+        background-color: #8ac6d0;
+        color: #000;
+        border: none;
+        padding: 10px 18px;
+        font-weight: bold;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+
+      .top-bar button:hover {
+        background-color: #b8f3ff;
+      }
+
+      .search-bar input {
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        width: 250px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+      }
+
+      th,
+      td {
+        padding: 14px 12px;
+        border-bottom: 1px solid #b8f3ff50;
+      }
+
+      th {
+        background-color: #40315d;
+        color: #fff;
+        font-size: 1rem;
+      }
+
+      tr:hover {
+        background-color: #665b89;
+      }
+
+      .remove-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .remove-btn:hover {
+        background-color: #ff6b5c;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: #40315d;
+        padding: 30px;
+        border-radius: 16px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .modal-content h2 {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+      }
+
+      .modal-content input {
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+      }
+
+      .modal-content button {
+        padding: 10px;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .submit-btn {
+        background-color: #8ac6d0;
+      }
+
+      .close-btn {
+        background-color: #e74c3c;
+        color: white;
+      }
+
+      .submit-btn:hover {
+        background-color: #b8f3ff;
+      }
+
+      .close-btn:hover {
+        background-color: #ff6b5c;
+      }
+
+      /* Light mode variables */
+      .light-mode {
+        --bg: #f4f4f4;
+        --card-bg: #ffffff;
+        --accent: #374785;
+        --highlight: #333;
+        --text: #000000;
+        background-color: var(--bg) !important;
+        color: var(--text) !important;
+      }
+
+      .light-mode .container {
+        background-color: var(--card-bg) !important;
+        color: var(--text) !important;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .light-mode .top-bar button {
+        background-color: var(--accent);
+        color: var(--text);
+      }
+
+      .light-mode .top-bar button:hover {
+        background-color: var(--highlight);
+      }
+
+      .light-mode table th {
+        background-color: #ccc !important;
+        color: var(--text) !important;
+      }
+
+      .light-mode tr:hover {
+        background-color: #ddd !important;
+      }
+
+      .light-mode .remove-btn {
+        background-color: #e74c3c;
+        color: white;
+      }
+
+      .light-mode .remove-btn:hover {
+        background-color: #ff6b5c;
+      }
+
+      .light-mode .modal-content {
+        background-color: var(--card-bg);
+        color: var(--text);
+      }
+
+      /* Theme toggle styles */
+      .theme-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #574a75;
+        border: 2px solid #b8f3ff;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background 0.4s ease, border-color 0.4s ease;
+      }
+
+      .light-mode .theme-toggle {
+        background: var(--card-bg);
+        border-color: var(--highlight);
+      }
+
+      .theme-toggle img {
+        width: 30px;
+        height: 30px;
+        user-select: none;
+        pointer-events: none;
+      }
+
+      .tooltip {
+        position: absolute;
+        right: 60px;
+        background: #574a75;
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s ease;
+        border: 1px solid #b8f3ff;
+        top: 50%;
+        transform: translateY(-50%);
+        user-select: none;
+      }
+
+      .theme-toggle:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .light-mode .tooltip {
+        background: var(--card-bg);
+        color: var(--text);
+        border-color: var(--highlight);
+      }
+      .back-btn {
+        background-color: #8ac6d0;
+        color: #000;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+      }
+
+      .back-btn:hover {
+        background-color: #b8f3ff;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Student Details</h1>
+    <div class="container">
+      <div class="top-bar">
+        <div class="search-bar">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by name or roll no..."
+            oninput="renderStudents()"
+          />
+        </div>
+        <button onclick="openModal()">+ Add Student</button>
+      </div>
+
+      <table id="studentTable">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Roll No.</th>
+            <th>Department</th>
+            <th>Room No.</th>
+            <th>Mobile No.</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="studentBody">
+          <!-- Entries go here -->
+        </tbody>
+      </table>
+      <div style="text-align: center; margin-top: 20px">
+        
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="studentModal">
+      <div class="modal-content">
+        <h2 id="modalTitle">Add Student</h2>
+        <input type="text" id="nameInput" placeholder="Student Name" />
+        <input type="text" id="rollInput" placeholder="Roll Number" />
+        <input type="text" id="deptInput" placeholder="Department" />
+        <input
+          type="text"
+          id="roomInput"
+          placeholder="Room Number (e.g., A-001)"
+        />
+        <input
+          type="text"
+          id="mobileInput"
+          placeholder="Mobile Number (10 digits)"
+        />
+        <button class="submit-btn" onclick="submitStudent()">Save</button>
+        <button class="close-btn" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px">
+      <div class="back-btn" onclick="location.href='Dashboard.html'">
+        ← Back to Dashboard
+      </div>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <div class="tooltip" id="themeTooltip">Switch to light mode</div>
+      <img id="themeIcon" src="sunny_979585.png" alt="theme icon" />
+    </div>
+
+    <script>
+      // Existing Student Details JS
+      let students = JSON.parse(localStorage.getItem("students")) || [];
+      let editIndex = -1;
+
+      function renderStudents() {
+        const tbody = document.getElementById("studentBody");
+        const search = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+        tbody.innerHTML = "";
+        students.forEach((student, index) => {
+          if (
+            student.name.toLowerCase().includes(search) ||
+            student.roll.toLowerCase().includes(search)
+          ) {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>
+              <img src="write_5828513.png" alt="Edit" title="Edit" style="width:20px; height:20px; vertical-align:middle; margin-right:8px; cursor:pointer;" onclick="editStudent(${index})" />
+              ${student.name}
+            </td>
+            <td>${student.roll}</td>
+            <td>${student.dept}</td>
+            <td>${student.room}</td>
+            <td>${student.mobile}</td>
+            <td><button class="remove-btn" onclick="removeStudent(${index})">Remove</button></td>
+          `;
+            tbody.appendChild(row);
+          }
+        });
+      }
+
+      function openModal() {
+        document.getElementById("studentModal").style.display = "flex";
+        document.getElementById("modalTitle").textContent =
+          editIndex === -1 ? "Add Student" : "Edit Student";
+      }
+
+      function closeModal() {
+        document.getElementById("studentModal").style.display = "none";
+        document.getElementById("nameInput").value = "";
+        document.getElementById("rollInput").value = "";
+        document.getElementById("deptInput").value = "";
+        document.getElementById("roomInput").value = "";
+        document.getElementById("mobileInput").value = "";
+        editIndex = -1;
+      }
+
+      function submitStudent() {
+        const name = document.getElementById("nameInput").value.trim();
+        const roll = document.getElementById("rollInput").value.trim();
+        const dept = document.getElementById("deptInput").value.trim();
+        const room = document
+          .getElementById("roomInput")
+          .value.trim()
+          .toUpperCase();
+        const mobile = document.getElementById("mobileInput").value.trim();
+
+        if (!name || !roll || !dept || !room || !mobile) {
+          alert("Please fill in all fields.");
+          return;
+        }
+
+        if (!/^[A-Z]-\d{3}$/.test(room)) {
+          alert("Room number must be in the format 'A-001'");
+          return;
+        }
+
+        if (!/^\d{10}$/.test(mobile)) {
+          alert("Mobile number must be exactly 10 digits.");
+          return;
+        }
+
+        if (editIndex === -1) {
+          // Add
+          students.push({ name, roll, dept, room, mobile });
+        } else {
+          // Edit
+          students[editIndex] = { name, roll, dept, room, mobile };
+        }
+        localStorage.setItem("students", JSON.stringify(students));
+        closeModal();
+        renderStudents();
+      }
+
+      function removeStudent(index) {
+        if (confirm("Are you sure you want to remove this student?")) {
+          students.splice(index, 1);
+          localStorage.setItem("students", JSON.stringify(students));
+          renderStudents();
+        }
+      }
+
+      function editStudent(index) {
+        editIndex = index;
+        const student = students[index];
+        document.getElementById("nameInput").value = student.name;
+        document.getElementById("rollInput").value = student.roll;
+        document.getElementById("deptInput").value = student.dept;
+        document.getElementById("roomInput").value = student.room;
+        document.getElementById("mobileInput").value = student.mobile;
+        openModal();
+      }
+
+      // Initial render
+      renderStudents();
+
+      // Close modal on clicking outside content
+      window.onclick = function (event) {
+        const modal = document.getElementById("studentModal");
+        if (event.target === modal) {
+          closeModal();
+        }
+      };
+
+      // THEME TOGGLE JS
+      const themeToggle = document.querySelector(".theme-toggle");
+      const themeIcon = document.getElementById("themeIcon");
+      const themeTooltip = document.getElementById("themeTooltip");
+
+      function setTheme(theme) {
+        if (theme === "light") {
+          document.body.classList.add("light-mode");
+          themeIcon.src = "half-moon_547433.png";
+          themeTooltip.textContent = "Switch to dark mode";
+        } else {
+          document.body.classList.remove("light-mode");
+          themeIcon.src = "sunny_979585.png";
+          themeTooltip.textContent = "Switch to light mode";
+        }
+        localStorage.setItem("theme", theme);
+      }
+
+      function toggleTheme() {
+        if (document.body.classList.contains("light-mode")) {
+          setTheme("dark");
+        } else {
+          setTheme("light");
+        }
+      }
+
+      // Load saved theme on page load
+      (function () {
+        const savedTheme = localStorage.getItem("theme") || "dark";
+        setTheme(savedTheme);
+      })();
+    </script>
+  </body>
+</html>

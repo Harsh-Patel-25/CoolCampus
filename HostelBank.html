@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="Logocc.png" type="image/png" />
+    <title>Hostel Bank System</title>
+    <style>
+      :root {
+        --bg: #35213f;
+        --card-bg: #574a75;
+        --input-bg: #8a8db1;
+        --accent: #8ac6d0;
+        --highlight: #b8f3ff;
+        --text: #ffffff;
+      }
+
+      .light-mode {
+        --bg: #f4f4f4;
+        --card-bg: #ffffff;
+        --input-bg: #dbe5ec;
+        --accent: #374785;
+        --highlight: #333;
+        --text: #000000;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Outfit", sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        transition: background-color 0.4s ease, color 0.4s ease;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 2rem;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        transition: background-color 0.4s ease, color 0.4s ease;
+      }
+
+      .search-bar {
+        margin-bottom: 20px;
+      }
+
+      .search-bar input {
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+        width: 100%;
+        max-width: 300px;
+        background-color: var(--input-bg);
+        color: var(--text);
+        transition: background-color 0.4s ease, color 0.4s ease;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+        color: var(--text);
+        transition: color 0.4s ease;
+      }
+
+      th,
+      td {
+        padding: 14px 12px;
+        border-bottom: 1px solid rgba(184, 243, 255, 0.3);
+      }
+
+      th {
+        background-color: #40315d;
+      }
+
+      tr:hover {
+        background-color: #665b89;
+        cursor: pointer;
+      }
+
+      .bank-section {
+        display: none;
+        margin-top: 30px;
+        background-color: #40315d;
+        padding: 20px;
+        border-radius: 16px;
+      }
+
+      .bank-section h2 {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .bank-section p {
+        font-size: 1.1rem;
+        margin: 10px 0;
+      }
+
+      .bank-section input {
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        margin-right: 10px;
+        width: 150px;
+      }
+
+      .bank-section button {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        margin: 5px;
+        cursor: pointer;
+        background-color: var(--accent);
+        color: black;
+        transition: background-color 0.3s ease;
+      }
+
+      .bank-section button:hover {
+        background-color: var(--highlight);
+      }
+
+      .transaction-log {
+        background-color: var(--card-bg);
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 10px;
+      }
+
+      .back-btn {
+        margin-top: 20px;
+        display: inline-block;
+        background-color: var(--accent);
+        color: #000;
+        padding: 10px 18px;
+        border-radius: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .back-btn:hover {
+        background-color: var(--highlight);
+      }
+
+      /* Theme Toggle Button */
+      .theme-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--card-bg);
+        border: 2px solid var(--highlight);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        transition: background 0.4s ease, border-color 0.4s ease;
+      }
+
+      .theme-toggle img {
+        width: 30px;
+        height: 30px;
+      }
+
+      .tooltip {
+        position: absolute;
+        right: 60px;
+        background: var(--card-bg);
+        color: var(--text);
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: 0.3s ease;
+        border: 1px solid var(--highlight);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .theme-toggle:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hostel Bank System</h1>
+
+    <div class="container" id="studentContainer">
+      <div class="search-bar">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by name or roll no..."
+          oninput="renderStudents()"
+        />
+      </div>
+
+      <table id="studentTable">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Roll No.</th>
+            <th>Department</th>
+            <th>Room No.</th>
+          </tr>
+        </thead>
+        <tbody id="studentBody"></tbody>
+      </table>
+      <div style="text-align: center; margin-top: 20px">
+        <div
+          class="back-btn"
+          onclick="location.href='Dashboard.html'"  
+          style="display: inline-block"
+        >
+          ← Back to Dashboard
+        </div>
+      </div>
+    </div>
+
+    <div class="container bank-section" id="bankSection">
+      <h2>Bank Details: <span id="selectedStudentName"></span></h2>
+      <p><strong>Roll No:</strong> <span id="selectedStudentRoll"></span></p>
+      <p><strong>Balance:</strong> ₹<span id="balance">1000</span></p>
+
+      <div>
+        <input type="number" id="amountInput" placeholder="Enter amount" />
+        <button onclick="deposit()">Deposit</button>
+        <button onclick="withdraw()">Withdraw</button>
+      </div>
+
+      <div class="transaction-log" id="transactionLog">
+        <h3>Transaction History:</h3>
+        <ul id="logList"></ul>
+        <button onclick="clearHistory()">Clear History</button>
+      </div>
+
+      <div class="back-btn" onclick="goBack()">← Back to Student List</div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <div class="tooltip" id="themeTooltip">Switch to light mode</div>
+      <img id="themeIcon" src="sunny_979585.png" alt="theme icon" />``
+    </div>
+
+    <script>
+      let students = JSON.parse(localStorage.getItem("students")) || [];
+      let selectedStudent = null;
+      let balance = 0;
+      let log = [];
+
+      function renderStudents() {
+        const tbody = document.getElementById("studentBody");
+        const search = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+        tbody.innerHTML = "";
+        students.forEach((student) => {
+          if (
+            student.name.toLowerCase().includes(search) ||
+            student.roll.toLowerCase().includes(search)
+          ) {
+            const row = document.createElement("tr");
+            row.onclick = () => openBankSection(student);
+            row.innerHTML = `
+              <td>${student.name}</td>
+              <td>${student.roll}</td>
+              <td>${student.dept}</td>
+              <td>${student.room}</td>
+            `;
+            tbody.appendChild(row);
+          }
+        });
+      }
+
+      function openBankSection(student) {
+        selectedStudent = student;
+
+        const data = JSON.parse(localStorage.getItem("bank_" + student.roll));
+        if (data) {
+          balance = data.balance;
+          log = data.log;
+        } else {
+          balance = 1000;
+          log = [];
+          saveBankData(); // first time save
+        }
+
+        document.getElementById("selectedStudentName").textContent =
+          student.name;
+        document.getElementById("selectedStudentRoll").textContent =
+          student.roll;
+        updateBalance();
+        renderLog();
+
+        document.getElementById("studentContainer").style.display = "none";
+        document.getElementById("bankSection").style.display = "block";
+      }
+
+      function updateBalance() {
+        document.getElementById("balance").textContent = balance.toFixed(2);
+      }
+
+      function deposit() {
+        const amountInput = document.getElementById("amountInput");
+        let amount = parseFloat(amountInput.value);
+        if (isNaN(amount) || amount <= 0) {
+          alert("Enter a valid positive amount");
+          return;
+        }
+        balance += amount;
+        addLog("Deposited ₹" + amount.toFixed(2));
+        updateBalance();
+        saveBankData();
+        amountInput.value = "";
+      }
+
+      function withdraw() {
+        const amountInput = document.getElementById("amountInput");
+        let amount = parseFloat(amountInput.value);
+        if (isNaN(amount) || amount <= 0) {
+          alert("Enter a valid positive amount");
+          return;
+        }
+        if (amount > balance) {
+          alert("Insufficient balance");
+          return;
+        }
+        balance -= amount;
+        addLog("Withdrew ₹" + amount.toFixed(2));
+        updateBalance();
+        saveBankData();
+        amountInput.value = "";
+      }
+
+      function addLog(entry) {
+        const time = new Date().toLocaleString();
+        log.unshift(`${time}: ${entry}`);
+        if (log.length > 10) log.pop();
+        renderLog();
+      }
+
+      function renderLog() {
+        const logList = document.getElementById("logList");
+        logList.innerHTML = "";
+        log.forEach((item) => {
+          let li = document.createElement("li");
+          li.textContent = item;
+          logList.appendChild(li);
+        });
+      }
+
+      function clearHistory() {
+        if (confirm("Clear transaction history?")) {
+          log = [];
+          saveBankData();
+          renderLog();
+        }
+      }
+
+      function saveBankData() {
+        if (selectedStudent) {
+          localStorage.setItem(
+            "bank_" + selectedStudent.roll,
+            JSON.stringify({ balance, log })
+          );
+        }
+      }
+
+      function goBack() {
+        selectedStudent = null;
+        document.getElementById("bankSection").style.display = "none";
+        document.getElementById("studentContainer").style.display = "block";
+      }
+
+      // Initially populate some students if none exist (for demo)
+      if (students.length === 0) {
+        students = [
+          { name: "John Doe", roll: "123", dept: "IT", room: "201" },
+          { name: "Jane Smith", roll: "456", dept: "CS", room: "102" },
+          { name: "Alice Johnson", roll: "789", dept: "ME", room: "303" },
+        ];
+        localStorage.setItem("students", JSON.stringify(students));
+      }
+
+      renderStudents();
+
+      // THEME TOGGLE FUNCTIONALITY
+
+      function toggleTheme() {
+        document.body.classList.toggle("light-mode");
+        const themeTooltip = document.getElementById("themeTooltip");
+        const themeIcon = document.getElementById("themeIcon");
+
+        if (document.body.classList.contains("light-mode")) {
+          themeTooltip.textContent = "Switch to dark mode";
+          themeIcon.src = "half-moon_547433.png"; // update icon accordingly
+        } else {
+          themeTooltip.textContent = "Switch to light mode";
+          themeIcon.src = "sunny_979585.png";
+        }
+      }
+    </script>
+  </body>
+</html>
