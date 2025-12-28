@@ -1,211 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dashboard - TheCoolCampus</title>
-    <link rel="icon" href="Logocc.png" type="image/png" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet" />
-    <style>
-      /* Same CSS as Login Page */
-      :root {
-        --bg: #36213e;
-        --card-bg: #554971;
-        --input-bg: #63768d;
-        --accent: #8ac6d0;
-        --highlight: #b8f3ff;
-        --text: #ffffff;
-      }
 
-      .light-mode {
-        --bg: #f4f4f4;
-        --card-bg: #ffffff;
-        --input-bg: #dbe5ec;
-        --accent: #374785;
-        --highlight: #333;
-        --text: #000;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - TheCoolCampus</title>
+  <link rel="icon" href="Logocc.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Same CSS as Login Page */
+    :root {
+      --bg: #36213e;
+      --card-bg: #554971;
+      --input-bg: #63768d;
+      --accent: #8ac6d0;
+      --highlight: #b8f3ff;
+      --text: #ffffff;
+    }
 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Outfit", sans-serif;
-      }
+    .light-mode {
+      --bg: #f4f4f4;
+      --card-bg: #ffffff;
+      --input-bg: #dbe5ec;
+      --accent: #374785;
+      --highlight: #333;
+      --text: #000;
+    }
 
-      body {
-        min-height: 100vh;
-        background: var(--bg);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 40px 20px;
-        transition: background 0.4s ease;
-        position: relative;
-      }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Outfit", sans-serif;
+    }
 
-      .dashboard-wrapper {
-        max-width: 600px;
-        width: 100%;
-        text-align: center;
-      }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      transition: background 0.4s ease;
+      position: relative;
+    }
 
-      .dashboard-wrapper h2 {
-        color: var(--highlight);
-        margin-bottom: 30px;
-        font-weight: 600;
-      }
+    .dashboard-wrapper {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
 
-      .dashboard-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 20px;
-      }
+    .dashboard-wrapper h2 {
+      color: var(--highlight);
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
 
-      .dashboard-button {
-        padding: 20px 30px;
-        font-size: 1.1rem;
-        color: var(--text);
-        background: var(--card-bg);
-        border: 2px solid var(--highlight);
-        border-radius: 12px;
-        cursor: pointer;
-        transition: 0.3s ease;
-        font-weight: 600;
-        position: relative;
-        overflow: hidden;
-        user-select: none;
-        z-index: 0;
-      }
+    .dashboard-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
 
-      .dashboard-button::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(120deg, transparent, var(--accent), transparent);
-        transition: all 0.5s ease;
-        z-index: -1;
-      }
+    .dashboard-button {
+      padding: 20px 30px;
+      font-size: 1.1rem;
+      color: var(--text);
+      background: var(--card-bg);
+      border: 2px solid var(--highlight);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      z-index: 0;
+    }
 
-      .dashboard-button:hover::before {
-        left: 100%;
-      }
+    .dashboard-button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, var(--accent), transparent);
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
 
-      .dashboard-button:hover {
-        border-color: var(--accent);
-        box-shadow: 0 0 15px var(--accent);
-        background: #63768d;
-        color: var(--highlight);
-        z-index: 1;
-      }
+    .dashboard-button:hover::before {
+      left: 100%;
+    }
 
-      .theme-toggle {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: var(--card-bg);
-        border: 2px solid var(--highlight);
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 1000;
-      }
+    .dashboard-button:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+      background: #63768d;
+      color: var(--highlight);
+      z-index: 1;
+    }
 
-      .theme-toggle img {
-        width: 30px;
-        height: 30px;
-      }
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 2px solid var(--highlight);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+    }
 
-      .tooltip {
-        position: absolute;
-        right: 60px;
-        background: var(--card-bg);
-        color: var(--text);
-        padding: 8px 12px;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.3s ease;
-        border: 1px solid var(--highlight);
-        top: 50%;
-        transform: translateY(-50%);
-      }
+    .theme-toggle img {
+      width: 30px;
+      height: 30px;
+    }
 
-      .theme-toggle:hover .tooltip {
-        opacity: 1;
-        visibility: visible;
-      }
+    .tooltip {
+      position: absolute;
+      right: 60px;
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s ease;
+      border: 1px solid var(--highlight);
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
-      .brand-header {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        display: flex;
-        align-items: center;
-        z-index: 100;
-      }
+    .theme-toggle:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
 
-      .brand-header img {
-        height: 40px;
-        margin-right: 10px;
-      }
+    .brand-header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      z-index: 100;
+    }
 
-      .brand-header span {
-        font-size: 1.8rem;
-        font-weight: 600;
-        color: var(--highlight);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="brand-header">
-      <img src="Logocc.png" alt="Cool Campus Logo" />
-      <span>TheCoolCampus</span>
+    .brand-header img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .brand-header span {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--highlight);
+    }
+
+    .logout-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 20px 30px;
+      font-size: 1.1rem;
+      color: var(--text);
+      background: var(--card-bg);
+      border: 2px solid var(--highlight);
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.3s ease;
+      z-index: 1200;
+      overflow: hidden;
+    }
+
+    /* same animated shine effect like other buttons */
+    .logout-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, var(--accent), transparent);
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
+
+    .logout-btn:hover::before {
+      left: 100%;
+    }
+
+    .logout-btn:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 15px var(--accent);
+      background: #63768d;
+      color: var(--highlight);
+      z-index: 1;
+    }
+
+
+    /* Fix welcome title position */
+    #welcomeTitle {
+      margin-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <button class="logout-btn" onclick="logoutNow()">Logout</button>
+
+  <div class="brand-header">
+    <img src="Logocc.png" alt="Cool Campus Logo" />
+    <span>TheCoolCampus</span>
+  </div>
+
+  <h2 id="welcomeTitle"></h2>
+
+
+  <div class="dashboard-wrapper">
+    <h2>Welcome to Dashboard 🧃</h2>
+    <div class="dashboard-container">
+      <button class="dashboard-button" onclick="window.location.href='Student.html'">Student Detail</button>
+      <button class="dashboard-button" onclick="window.location.href='Attendence.html'">Attendance</button>
+      <button class="dashboard-button" onclick="window.location.href='Fees.html'">Fees</button>
+      <button class="dashboard-button" onclick="window.location.href='Admission.html'">Admission</button>
+      <button class="dashboard-button" onclick="window.location.href='NOC.html'">NOC / Leave</button>
+      <button class="dashboard-button" onclick="window.location.href='HostelBank.html'">Hostel Bank</button>
     </div>
+  </div>
 
-    <div class="dashboard-wrapper">
-      <h2>Welcome to Dashboard 🧃</h2>
-      <div class="dashboard-container">
-        <button class="dashboard-button" onclick="window.location.href='Student.html'">Student Detail</button>
-        <button class="dashboard-button" onclick="window.location.href='Attendence.html'">Attendance</button>
-        <button class="dashboard-button" onclick="window.location.href='Fees.html'">Fees</button>
-        <button class="dashboard-button" onclick="window.location.href='Admission.html'">Admission</button>
-        <button class="dashboard-button" onclick="window.location.href='NOC.html'">NOC / Leave</button>
-        <button class="dashboard-button" onclick="window.location.href='HostelBank.html'">Hostel Bank</button>
-      </div>
-    </div>
+  <div class="theme-toggle" onclick="toggleTheme()">
+    <div class="tooltip" id="themeTooltip">Switch to light mode</div>
+    <img id="themeIcon" src="sunny_979585.png" alt="theme icon" />
+  </div>
 
-    <div class="theme-toggle" onclick="toggleTheme()">
-      <div class="tooltip" id="themeTooltip">Switch to light mode</div>
-      <img id="themeIcon" src="sunny_979585.png" alt="theme icon" />
-    </div>
+  <script src="auth.js"></script>
+  <script>
+    protectPage();
 
-    <script>
-      function toggleTheme() {
-        const body = document.body;
-        const icon = document.getElementById("themeIcon");
-        const tooltip = document.getElementById("themeTooltip");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const email = getActiveUserEmail();
+    const me = users.find(u => u.email === email);
+  </script>
+  <script src="theme.js"></script>
 
-        body.classList.toggle("light-mode");
+</body>
 
-        if (body.classList.contains("light-mode")) {
-          icon.src = "half-moon_547433.png";
-          tooltip.textContent = "Switch to dark mode";
-        } else {
-          icon.src = "sunny_979585.png";
-          tooltip.textContent = "Switch to light mode";
-        }
-      }
-    </script>
-  </body>
 </html>

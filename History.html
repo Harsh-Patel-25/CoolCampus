@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="Logocc.png" type="image/png" />
   <title>Leave History</title>
   <style>
@@ -41,7 +42,7 @@
       background-color: var(--card-bg);
       padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
 
     ul {
@@ -111,6 +112,7 @@
     }
   </style>
 </head>
+
 <body>
   <h1>Leave History</h1>
   <div class="history-container">
@@ -124,39 +126,23 @@
     <img id="themeIcon" src="sunny_979585.png" alt="theme icon" />
   </div>
 
+  <script src="auth.js"></script>
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const roll = params.get("roll");
-    const leaveNOCData = JSON.parse(localStorage.getItem("leaveNOC")) || {};
-    const data = leaveNOCData[roll];
-    const container = document.getElementById("historyContent");
+    protectPage();
 
-    if (data && data.leaveHistory && data.leaveHistory.length > 0) {
-      let html = "<ul>";
-      data.leaveHistory.forEach((entry, index) => {
-        html += `<li>${index + 1}. ${entry.from} to ${entry.to}</li>`;
-      });
-      html += "</ul>";
-      container.innerHTML = html;
+    const roll = new URLSearchParams(location.search).get("roll");
+    let leaveNOC = loadData("leaveNOC", {});
+    const data = leaveNOC[roll];
+    const box = document.getElementById("historyContent");
+
+    if (data?.leaveHistory?.length) {
+      box.innerHTML = `<ul>${data.leaveHistory.map((h, i) => `<li>${i + 1}. ${h.from} → ${h.to}</li>`).join("")}</ul>`;
     } else {
-      container.innerHTML = "<p>No leave history found.</p>";
-    }
-
-    function toggleTheme() {
-      const body = document.body;
-      const icon = document.getElementById("themeIcon");
-      const tooltip = document.getElementById("themeTooltip");
-
-      body.classList.toggle("light-mode");
-
-      if (body.classList.contains("light-mode")) {
-        icon.src = "half-moon_547433.png";
-        tooltip.textContent = "Switch to dark mode";
-      } else {
-        icon.src = "sunny_979585.png";
-        tooltip.textContent = "Switch to light mode";
-      }
+      box.textContent = "No leave history";
     }
   </script>
+  <script src="theme.js"></script>
+
 </body>
+
 </html>

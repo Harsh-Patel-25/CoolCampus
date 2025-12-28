@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign Up - TheCoolCampus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
+  <link rel="icon" href="Logocc.png" type="image/png" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="login-container">
+    <form class="login-card" onsubmit="return registerUser()">
+      <h2>Create Account 💫</h2>
+      <p>Join Cool Campus today</p>
+
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="name" placeholder="Full Name" required>
+      </div>
+
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" id="email" placeholder="Email" required>
+      </div>
+
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password" placeholder="Password" minlength="5" required>
+      </div>
+
+      <button type="submit">Sign Up 🚀</button>
+
+      <p class="signup">Already have an account?
+        <a href="index.html">Login</a>
+      </p>
+    </form>
+  </div>
+
+  <script>
+    function registerUser() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value.trim();
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+
+      if (users.some((u) => u.email === email)) {
+        alert("Email already exists! Try login 🚫");
+        return false;
+      }
+
+      users.push({ name, email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      localStorage.setItem("activeUser", email);
+
+      alert("Account created successfully! 🎉");
+      window.location.href = "Dashboard.html";
+      return false;
+    }
+  </script>
+  <script src="theme.js"></script>
+
+</body>
+
+</html>

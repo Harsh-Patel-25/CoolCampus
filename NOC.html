@@ -1,523 +1,410 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <link rel="icon" href="Logocc.png" type="image/png" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Leave / NOC</title>
-    <style>
-      :root {
-        --bg: #35213f;
-        --card-bg: #574a75;
-        --accent: #e74c3c;
-        --highlight: #b8f3ff;
-        --text: #ffffff;
-      }
 
-      .light-mode {
-        --bg: #f4f4f4;
-        --card-bg: #ffffff;
-        --accent: #374785;
-        --highlight: #333;
-        --text: #000000;
-      }
+<head>
+  <link rel="icon" href="Logocc.png" type="image/png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leave / NOC</title>
+  <style>
+    :root {
+      --bg: #35213f;
+      --card-bg: #574a75;
+      --accent: #e74c3c;
+      --highlight: #b8f3ff;
+      --text: #ffffff;
+    }
 
-      body {
-        margin: 0;
-        font-family: "Outfit", sans-serif;
-        background-color: var(--bg);
-        color: var(--text);
-        transition: background-color 0.4s ease, color 0.4s ease;
-        padding: 0 20px 60px; /* leave space for toggle */
-      }
+    .light-mode {
+      --bg: #f4f4f4;
+      --card-bg: #ffffff;
+      --accent: #374785;
+      --highlight: #333;
+      --text: #000000;
+    }
 
-      h1 {
-        text-align: center;
-        margin: 20px 0;
-      }
+    body {
+      margin: 0;
+      font-family: "Outfit", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color 0.4s ease, color 0.4s ease;
+      padding: 0 20px 60px;
+      /* leave space for toggle */
+    }
 
-      .container,
-      .student-view {
-        max-width: 900px;
-        margin: 20px auto;
-        background-color: var(--card-bg);
-        border-radius: 16px;
-        padding: 20px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        transition: background-color 0.4s ease;
-      }
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+    }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-      }
+    .container,
+    .student-view {
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      transition: background-color 0.4s ease;
+    }
 
-      th,
-      td {
-        padding: 12px;
-        text-align: center;
-        border-bottom: 1px solid var(--highlight);
-        color: var(--text);
-        transition: color 0.4s ease, border-color 0.4s ease;
-      }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
 
-      th {
-        background-color: #40315d;
-      }
+    th,
+    td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid var(--highlight);
+      color: var(--text);
+      transition: color 0.4s ease, border-color 0.4s ease;
+    }
 
-      tr:hover {
-        background-color: #665b89;
-        cursor: pointer;
-      }
+    th {
+      background-color: #40315d;
+    }
 
-      #backBtn {
-        display: none;
-        background-color: var(--accent);
-        color: var(--text);
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-weight: bold;
-        cursor: pointer;
-        margin: 10px;
-        border: none;
-        transition: background-color 0.3s ease;
-      }
+    tr:hover {
+      background-color: #665b89;
+      cursor: pointer;
+    }
 
-      #backBtn:hover {
-        background-color: #c0392b;
-      }
+    #backBtn {
+      display: none;
+      background-color: var(--accent);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 10px;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
 
-      .genz-btn {
-        padding: 14px 24px;
-        margin: 10px;
-        border: none;
-        border-radius: 12px;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        background: linear-gradient(135deg, #8ac6d0, #b8f3ff);
-        color: #000;
-        box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
-        transition: transform 0.2s ease-in-out;
-      }
+    #backBtn:hover {
+      background-color: #c0392b;
+    }
 
-      .genz-btn:hover {
-        transform: scale(1.05);
-      }
+    .genz-btn {
+      padding: 14px 24px;
+      margin: 10px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(135deg, #8ac6d0, #b8f3ff);
+      color: #000;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+      transition: transform 0.2s ease-in-out;
+    }
 
-      .form-group {
-        margin: 15px 0;
-      }
+    .genz-btn:hover {
+      transform: scale(1.05);
+    }
 
-      .form-group input,
-      .form-group textarea {
-        width: 100%;
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        margin-top: 5px;
-        font-family: inherit;
-        font-size: 1rem;
-      }
+    .form-group {
+      margin: 15px 0;
+    }
 
-      .hidden {
-        display: none;
-      }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 5px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
 
-      .saved-data {
-        margin-top: 20px;
-        background-color: #40315d;
-        padding: 15px;
-        border-radius: 10px;
-        color: var(--text);
-        transition: background-color 0.4s ease, color 0.4s ease;
-      }
+    .hidden {
+      display: none;
+    }
 
-      label {
-        font-weight: bold;
-        color: var(--text);
-        transition: color 0.4s ease;
-      }
+    .saved-data {
+      margin-top: 20px;
+      background-color: #40315d;
+      padding: 15px;
+      border-radius: 10px;
+      color: var(--text);
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
 
-      .file-upload {
-        margin-top: 10px;
-      }
+    label {
+      font-weight: bold;
+      color: var(--text);
+      transition: color 0.4s ease;
+    }
 
-      .student-name-title {
-        text-align: center;
-        font-size: 1.3rem;
-        margin-bottom: 10px;
-        color: var(--text);
-        transition: color 0.4s ease;
-      }
+    .file-upload {
+      margin-top: 10px;
+    }
 
-      /* Theme Toggle Button */
-      .theme-toggle {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: var(--card-bg);
-        border: 2px solid var(--highlight);
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 1000;
-        transition: background-color 0.4s ease, border-color 0.4s ease;
-      }
+    .student-name-title {
+      text-align: center;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: var(--text);
+      transition: color 0.4s ease;
+    }
 
-      .theme-toggle img {
-        width: 30px;
-        height: 30px;
-        pointer-events: none;
-        user-select: none;
-      }
+    /* Theme Toggle Button */
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: 2px solid var(--highlight);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      transition: background-color 0.4s ease, border-color 0.4s ease;
+    }
 
-      .tooltip {
-        position: absolute;
-        right: 60px;
-        background: var(--card-bg);
-        color: var(--text);
-        padding: 8px 12px;
-        border-radius: 8px;
-        font-size: 0.85rem;
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        transition: 0.3s ease;
-        border: 1px solid var(--highlight);
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-        user-select: none;
-      }
+    .theme-toggle img {
+      width: 30px;
+      height: 30px;
+      pointer-events: none;
+      user-select: none;
+    }
 
-      .theme-toggle:hover .tooltip {
-        opacity: 1;
-        visibility: visible;
-      }
-      .top-bar {
-        display: flex;
-        justify-content: flex-start;
-        margin-bottom: 10px;
-      }
+    .tooltip {
+      position: absolute;
+      right: 60px;
+      background: var(--card-bg);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s ease;
+      border: 1px solid var(--highlight);
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      user-select: none;
+    }
 
-      .top-bar input {
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        outline: none;
-        font-weight: bold;
-        font-family: "Outfit", sans-serif;
-        background-color: var(--highlight);
-        color: var(--bg);
-        transition: background 0.3s ease, color 0.3s ease;
-      }
-      .back-btn-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 30px;
-      }
+    .theme-toggle:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
 
-      .back-btn {
-        padding: 12px 25px;
-        background-color: var(--accent);
-        color: var(--bg);
-        font-weight: bold;
-        border-radius: 12px;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
+    .top-bar {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 10px;
+    }
 
-      .back-btn:hover {
-        background-color: var(--highlight);
-        color: var(--text);
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Leave / NOC System</h1>
+    .top-bar input {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-weight: bold;
+      font-family: "Outfit", sans-serif;
+      background-color: var(--highlight);
+      color: var(--bg);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
 
-    <div class="container" id="mainTableView">
-      <div class="top-bar">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search by name or roll no..."
-          oninput="filterStudents()"
-        />
-      </div>
+    .back-btn-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
 
-      <table>
-        <thead>
-          <tr>
-            <th>Student Name</th>
-            <th>Roll No</th>
-            <th>Department</th>
-            <th>Room No</th>
-          </tr>
-        </thead>
-        <tbody id="studentTableBody"></tbody>
-      </table>
-      <div class="back-btn-container">
-        <button class="back-btn" onclick="location.href='Dashboard.html'">
-          ⬅ Back to Dashboard
-        </button>
-      </div>
+    .back-btn {
+      padding: 12px 25px;
+      background-color: var(--accent);
+      color: var(--bg);
+      font-weight: bold;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: var(--highlight);
+      color: var(--text);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Leave / NOC System</h1>
+
+  <div class="container" id="mainTableView">
+    <div class="top-bar">
+      <input type="text" id="searchInput" placeholder="Search by name or roll no..." oninput="filterStudents()" />
     </div>
 
-    <div class="student-view hidden" id="studentPage">
-      <div class="student-name-title" id="studentNameTitle"></div>
-      <div style="text-align: center">
-        <button class="genz-btn" onclick="showLeaveForm()">Leave</button>
-        <button class="genz-btn" onclick="showNOCForm()">NOC</button>
-        <button
-          class="genz-btn hidden"
-          id="historyBtn"
-          onclick="showLeaveHistory()"
-        >
-          History
-        </button>
-      </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Roll No</th>
+          <th>Department</th>
+          <th>Room No</th>
+        </tr>
+      </thead>
+      <tbody id="studentTableBody"></tbody>
+    </table>
+    <div class="back-btn-container">
+      <button class="back-btn" onclick="location.href='Dashboard.html'">
+        ⬅ Back to Dashboard
+      </button>
+    </div>
+  </div>
 
-      <div id="leaveForm" class="hidden">
-        <div class="form-group">
-          <label>From Date</label>
-          <input type="date" id="leaveFrom" />
-        </div>
-        <div class="form-group">
-          <label>To Date</label>
-          <input type="date" id="leaveTo" />
-        </div>
-        <button class="genz-btn" onclick="saveLeave()">Save Leave</button>
-      </div>
-
-      <div id="nocForm" class="hidden">
-        <div class="form-group">
-          <label>Leaving Date</label>
-          <input type="date" id="nocDate" />
-        </div>
-        <div class="form-group">
-          <label>Reviews / Memories</label>
-          <textarea
-            rows="4"
-            id="nocReview"
-            placeholder="Write your memory..."
-          ></textarea>
-        </div>
-        <div class="form-group file-upload">
-          <label>Upload file (optional)</label>
-          <input type="file" id="nocFile" />
-        </div>
-        <button class="genz-btn" onclick="saveNOC()">Save NOC</button>
-      </div>
-
-      <div class="saved-data" id="savedData"></div>
-      <button id="backBtn" onclick="goBack()">Back to Home</button>
+  <div class="student-view hidden" id="studentPage">
+    <div class="student-name-title" id="studentNameTitle"></div>
+    <div style="text-align: center">
+      <button class="genz-btn" onclick="showLeaveForm()">Leave</button>
+      <button class="genz-btn" onclick="showNOCForm()">NOC</button>
+      <button class="genz-btn hidden" id="historyBtn" onclick="showLeaveHistory()">
+        History
+      </button>
     </div>
 
-    <!-- Theme Toggle Button -->
-    <div class="theme-toggle" onclick="toggleTheme()">
-      <div class="tooltip" id="themeTooltip">Switch to light mode</div>
-      <img id="themeIcon" src="sunny_979585.png" alt="theme icon" />
+    <div id="leaveForm" class="hidden">
+      <div class="form-group">
+        <label>From Date</label>
+        <input type="date" id="leaveFrom" />
+      </div>
+      <div class="form-group">
+        <label>To Date</label>
+        <input type="date" id="leaveTo" />
+      </div>
+      <button class="genz-btn" onclick="saveLeave()">Save Leave</button>
     </div>
 
-    <script>
-      // Students and Leave/NOC data from localStorage or default
-      const students = JSON.parse(localStorage.getItem("students")) || [
-        { name: "John Doe", roll: "101", dept: "CSE", room: "A1" },
-        { name: "Jane Smith", roll: "102", dept: "ECE", room: "B2" },
-      ];
-      const leaveNOCData = JSON.parse(localStorage.getItem("leaveNOC")) || {};
-      let currentStudent = null;
+    <div id="nocForm" class="hidden">
+      <div class="form-group">
+        <label>Leaving Date</label>
+        <input type="date" id="nocDate" />
+      </div>
+      <div class="form-group">
+        <label>Reviews / Memories</label>
+        <textarea rows="4" id="nocReview" placeholder="Write your memory..."></textarea>
+      </div>
+      <div class="form-group file-upload">
+        <label>Upload file (optional)</label>
+        <input type="file" id="nocFile" />
+      </div>
+      <button class="genz-btn" onclick="saveNOC()">Save NOC</button>
+    </div>
 
-      // Render student table
-      function renderTable() {
-        const tbody = document.getElementById("studentTableBody");
-        tbody.innerHTML = "";
-        students.forEach((student, index) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-          <td>${student.name}</td>
-          <td>${student.roll}</td>
-          <td>${student.dept}</td>
-          <td>${student.room}</td>
-        `;
-          tr.onclick = () => openStudentPage(student);
-          tbody.appendChild(tr);
-        });
-        localStorage.setItem("students", JSON.stringify(students));
-      }
+    <div class="saved-data" id="savedData"></div>
+    <button id="backBtn" onclick="goBack()">Back to Home</button>
+  </div>
 
-      // Open selected student page
-      function openStudentPage(student) {
-        currentStudent = student;
-        document.getElementById("mainTableView").classList.add("hidden");
-        document.getElementById("studentPage").classList.remove("hidden");
-        document.getElementById(
-          "studentNameTitle"
-        ).innerText = `Student: ${student.name} (${student.roll})`;
-        document.getElementById("backBtn").style.display = "inline-block";
-        displaySavedData();
-        hideAllForms();
-      }
+  <!-- Theme Toggle Button -->
+  <div class="theme-toggle" onclick="toggleTheme()">
+    <div class="tooltip" id="themeTooltip">Switch to light mode</div>
+    <img id="themeIcon" src="sunny_979585.png" alt="theme icon" />
+  </div>
 
-      // Go back to main table view
-      function goBack() {
-        document.getElementById("studentPage").classList.add("hidden");
-        document.getElementById("mainTableView").classList.remove("hidden");
-        hideAllForms();
-        document.getElementById("historyBtn").classList.add("hidden");
-        document.getElementById("backBtn").style.display = "none";
-      }
+  <script src="auth.js"></script>
+  <script>
+    protectPage();
 
-      // Hide all forms
-      function hideAllForms() {
-        document.getElementById("leaveForm").classList.add("hidden");
-        document.getElementById("nocForm").classList.add("hidden");
-      }
+    let students = loadData("students");
+    let leaveNOC = loadData("leaveNOC", {});
+    let current = null;
 
-      // Show Leave form
-      function showLeaveForm() {
-        document.getElementById("leaveForm").classList.remove("hidden");
-        document.getElementById("nocForm").classList.add("hidden");
-        document.getElementById("historyBtn").classList.remove("hidden");
-      }
+    function renderTable() {
+      studentTableBody.innerHTML = "";
+      students.forEach(s => {
+        const tr = document.createElement("tr");
+        tr.onclick = () => openStudent(s);
+        tr.innerHTML = `<td>${s.name}</td><td>${s.roll}</td><td>${s.dept}</td><td>${s.room}</td>`;
+        studentTableBody.appendChild(tr);
+      });
+    }
 
-      // Show NOC form
-      function showNOCForm() {
-        document.getElementById("nocForm").classList.remove("hidden");
-        document.getElementById("leaveForm").classList.add("hidden");
-        document.getElementById("historyBtn").classList.add("hidden");
-      }
+    function openStudent(s) {
+      current = s;
+      mainTableView.classList.add("hidden");
+      studentPage.classList.remove("hidden");
+      studentNameTitle.textContent = `${s.name} (${s.roll})`;
+      showData();
+    }
 
-      // Save leave data
-      function saveLeave() {
-        const from = document.getElementById("leaveFrom").value;
-        const to = document.getElementById("leaveTo").value;
+    function showLeaveForm() {
+      leaveForm.classList.remove("hidden");
+      nocForm.classList.add("hidden");
+    }
 
-        if (!from || !to) {
-          alert("Please fill in both dates.");
-          return;
-        }
+    function showNOCForm() {
+      nocForm.classList.remove("hidden");
+      leaveForm.classList.add("hidden");
+    }
 
-        const key = currentStudent.roll;
-        leaveNOCData[key] = leaveNOCData[key] || {};
-        leaveNOCData[key].leaveHistory = leaveNOCData[key].leaveHistory || [];
-        leaveNOCData[key].leaveHistory.push({ from, to });
-        leaveNOCData[key].leave = { from, to };
-        localStorage.setItem("leaveNOC", JSON.stringify(leaveNOCData));
-        displaySavedData();
-        alert("Leave details saved.");
-      }
+    function saveLeave() {
+      const from = leaveFrom.value;
+      const to = leaveTo.value;
+      if (!from || !to) return alert("Fill dates!");
 
-      // Show leave history page
-      function showLeaveHistory() {
-        window.location.href = `history.html?roll=${currentStudent.roll}`;
-      }
+      const key = current.roll;
+      leaveNOC[key] ??= { leaveHistory: [] };
+      leaveNOC[key].leaveHistory.push({ from, to });
+      saveData("leaveNOC", leaveNOC);
+      alert("Saved!");
+      showData();
+    }
 
-      // Save NOC data
-      function saveNOC() {
-        const date = document.getElementById("nocDate").value;
-        const review = document.getElementById("nocReview").value;
+    function saveNOC() {
+      const date = nocDate.value;
+      const review = nocReview.value;
+      if (!date || !review) return alert("Fill all!");
 
-        if (!date || !review) {
-          alert("Please enter leaving date and review.");
-          return;
-        }
+      const key = current.roll;
+      leaveNOC[key] ??= {};
+      leaveNOC[key].noc = { date, review };
+      saveData("leaveNOC", leaveNOC);
+      alert("Saved!");
+      showData();
+    }
 
-        const key = currentStudent.roll;
-        leaveNOCData[key] = leaveNOCData[key] || {};
-        leaveNOCData[key].noc = { date, review };
-        localStorage.setItem("leaveNOC", JSON.stringify(leaveNOCData));
-        displaySavedData();
-        alert("NOC details saved.");
-      }
+    function showData() {
+      const key = current.roll;
+      const d = leaveNOC[key] || {};
+      let html = "";
 
-      // Display saved data on student page
-      function displaySavedData() {
-        const key = currentStudent.roll;
-        const dataDiv = document.getElementById("savedData");
-        const data = leaveNOCData[key] || {};
-        let html = "";
+      if (d.leaveHistory?.length)
+        html += `<h4>Leave History:</h4><ul>${d.leaveHistory.map(h => `<li>${h.from} → ${h.to}</li>`).join("")}</ul>`;
 
-        if (data.leave) {
-          html += `<h3>Leave Details:</h3><p>From: ${data.leave.from} To: ${data.leave.to}</p>`;
-        }
-        if (data.leaveHistory && data.leaveHistory.length) {
-          html += `<h4>Leave History:</h4><ul>`;
-          data.leaveHistory.forEach((item) => {
-            html += `<li>${item.from} to ${item.to}</li>`;
-          });
-          html += `</ul>`;
-        }
-        if (data.noc) {
-          html += `<h3>NOC Details:</h3><p>Leaving Date: ${data.noc.date}</p><p>Review: ${data.noc.review}</p>`;
-        }
+      if (d.noc)
+        html += `<h4>NOC:</h4><p>Date: ${d.noc.date}</p><p>${d.noc.review}</p>`;
 
-        dataDiv.innerHTML = html || "<p>No saved data.</p>";
-      }
+      savedData.innerHTML = html || "No Data";
+    }
 
-      // ----------------------------
-      // Theme toggle logic
+    function goBack() {
+      studentPage.classList.add("hidden");
+      mainTableView.classList.remove("hidden");
+    }
 
-      const themeToggleBtn = document.querySelector(".theme-toggle");
-      const themeIcon = document.getElementById("themeIcon");
-      const themeTooltip = document.getElementById("themeTooltip");
+    renderTable();
+  </script>
+  <script src="theme.js"></script>
 
-      // On load, check saved theme
-      function loadTheme() {
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme === "light") {
-          document.body.classList.add("light-mode");
-          themeIcon.src = "moon_979585.png";
-          themeTooltip.textContent = "Switch to dark mode";
-        } else {
-          document.body.classList.remove("light-mode");
-          themeIcon.src = "sunny_979585.png";
-          themeTooltip.textContent = "Switch to light mode";
-        }
-      }
+</body>
 
-      function toggleTheme() {
-        document.body.classList.toggle("light-mode");
-        const isLight = document.body.classList.contains("light-mode");
-        if (isLight) {
-          themeIcon.src = "half-moon_547433.png";
-          themeTooltip.textContent = "Switch to dark mode";
-          localStorage.setItem("theme", "light");
-        } else {
-          themeIcon.src = "sunny_979585.png";
-          themeTooltip.textContent = "Switch to light mode";
-          localStorage.setItem("theme", "dark");
-        }
-      }
-      function filterStudents() {
-        const input = document
-          .getElementById("searchInput")
-          .value.toLowerCase();
-        const rows = document.querySelectorAll("#studentTableBody tr");
-
-        rows.forEach((row) => {
-          const name = row.children[0].textContent.toLowerCase();
-          const roll = row.children[1].textContent.toLowerCase();
-          if (name.includes(input) || roll.includes(input)) {
-            row.style.display = "";
-          } else {
-            row.style.display = "none";
-          }
-        });
-      }
-
-      // Initialize
-      loadTheme();
-      renderTable();
-    </script>
-  </body>
 </html>
